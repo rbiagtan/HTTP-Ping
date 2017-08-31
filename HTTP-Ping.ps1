@@ -5,7 +5,7 @@ A timestamped YES or NO is written to a log file. The script will run in an infi
 
 Toolmaker: Rod Biagtan
 Date: August 30, 2017
-Version: 0.1
+Version: 0.2
 
 Things that would improve the tool:
     - Variable for website
@@ -15,8 +15,12 @@ Things that would improve the tool:
     - Variable for Start-Sleep
 #>
 
+
+#The site we are requesting
+$Site = 'https://trg-vip.ext.doj.ca.gov/tr/ws/dns2?wsdl'
+
 # First we create the request
-$HTTP_Request = [System.Net.WebRequest]::Create('http://google.com')
+$HTTP_Request = [System.Net.WebRequest]::Create($Site)
 
 # We then get a response from the site
 $HTTP_Response = $HTTP_Request.GetResponse()
@@ -24,6 +28,8 @@ $HTTP_Response = $HTTP_Request.GetResponse()
 # We then get the HTTP code as an integer
 $HTTP_Status = [int]$HTTP_Response.StatusCode
 
+
+Add-Content C:\b4all\Utilities\HTTP_request_ping_log.txt ("Pinging " + $Site) 
 while($true)
 {
     $i++
@@ -33,16 +39,17 @@ while($true)
     
     # Valid response
     If ($HTTP_Status -eq 200) { 
+        Write-Host $startTime Hit successful
         Add-Content C:\b4all\Utilities\HTTP_request_ping_log.txt ([string]$startTime + " YES - the site is OK!") 
+    # Clean up the http request by closing it
+    $HTTP_Response.Close()
     }
     # Invalid response
     Else {
-        
+        Write-Host $startTime Hit unsuccessful
         Add-Content C:\b4all\Utilities\HTTP_request_ping_log.txt ([string]$startTime + " NO - the site may be DOWN!")
     }
 
-    # Clean up the http request by closing it
-    $HTTP_Response.Close()
     
     # Wait a set number of seconds before looping
     start-sleep -Seconds 1
