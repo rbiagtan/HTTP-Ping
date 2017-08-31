@@ -3,7 +3,7 @@
 This tool will perform a HTTP GET looking for a RESPONSE value of 200 indicating the website is up.
 A timestamped YES or NO is written to a log file. The script will run in an infinite loop.
 
-Toolmaker: Rod Biagtan
+Toolmakers: Rod Biagtan, William Yang
 Date: August 30, 2017
 Version: 0.2
 
