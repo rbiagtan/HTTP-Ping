@@ -17,7 +17,7 @@ Things that would improve the tool:
 
 
 #The site we are requesting
-$Site = 'https://trg-vip.ext.doj.ca.gov/tr/ws/dns2?wsdl'
+$Site = 'www.google.com'
 
 # First we create the request
 $HTTP_Request = [System.Net.WebRequest]::Create($Site)
